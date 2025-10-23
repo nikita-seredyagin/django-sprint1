@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Лента записей{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4 pb-2 border-bottom">Лента записей</h1>
+
+  {% for post in posts %}
+    <div class="mb-5 border-bottom pb-3">
+      <ul>
+        <li><strong>Место:</strong> {{ post.location }}</li>
+        <li><strong>Дата:</strong> {{ post.date }}</li>
+        <li><strong>Категория:</strong>
+          <a href="{% url 'blog:category_posts' post.category %}">
+            {{ post.category }}
+          </a>
+        </li>
+      </ul>
+
+      <p>{{ post.text|truncatewords:20 }}</p>
+      <a href="{% url 'blog:post_detail' post.id %}">Читать полный текст</a>
+    </div>
+  {% empty %}
+    <p>Нет записей.</p>
+  {% endfor %}
+{% endblock %}
